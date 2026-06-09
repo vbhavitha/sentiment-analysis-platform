@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}
+Keywords Analytics
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-5">
+        Keywords Analytics
+    </h1>
+
+    <!-- Keyword Cards -->
+
+    <div class="row g-4">
+
+        <!-- Positive -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h4 class="text-success">
+                        Positive Keywords
+                    </h4>
+
+                    <ul>
+
+                        {% for word, count in positive_keywords %}
+
+                        <li>
+                            {{ word }} ({{ count }})
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Negative -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h4 class="text-danger">
+                        Negative Keywords
+                    </h4>
+
+                    <ul>
+
+                        {% for word, count in negative_keywords %}
+
+                        <li>
+                            {{ word }} ({{ count }})
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Overall -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h4 class="text-primary">
+                        Overall Keywords
+                    </h4>
+
+                    <ul>
+
+                        {% for word, count in all_keywords %}
+
+                        <li>
+                            {{ word }} ({{ count }})
+                        </li>
+
+                        {% endfor %}
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Chart Card -->
+
+    <div class="card mt-5 shadow">
+
+        <div class="card-body">
+
+            <h3 class="text-center mb-4">
+                Top Keywords Chart
+            </h3>
+
+            <div
+                style="
+                    height: 400px;
+                    position: relative;
+                ">
+
+                <canvas id="keywordChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const keywordData = JSON.parse(
+    '{{ all_keywords|tojson|safe }}'
+);
+
+const labels = keywordData.map(
+    item => item[0]
+);
+
+const counts = keywordData.map(
+    item => item[1]
+);
+
+const ctx =
+document.getElementById(
+    "keywordChart"
+);
+
+new Chart(ctx, {
+
+    type: "bar",
+
+    data: {
+
+        labels: labels,
+
+        datasets: [{
+
+    label: "Keyword Frequency",
+
+    data: counts,
+
+    backgroundColor: "#0d6efd",
+
+    barThickness: 25
+
+}]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+
+            legend: {
+
+                display: false
+
+            }
+
+        },
+
+        scales: {
+
+            y: {
+
+                beginAtZero: true
+
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

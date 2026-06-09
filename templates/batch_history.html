@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+
+{% block title %}
+Batch History
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">
+
+        Batch Analysis History
+
+    </h1>
+
+    <div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header">
+
+        <h4 class="mb-0">
+            📈 Batch Processing Trends
+        </h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <div style="height:350px;">
+
+            <canvas id="historyChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <div class="table-responsive">
+
+        <table
+            class="table table-bordered table-hover align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Date</th>
+
+                    <th>Total Reviews</th>
+
+                    <th>Positive</th>
+
+                    <th>Negative</th>
+
+                    <th>Neutral</th>
+
+                    <th>Processing Time</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for report in reports %}
+
+                <tr>
+
+                    <td>
+                        {{ report.id }}
+                    </td>
+
+                    <td>
+                        {{ report.created_at.strftime('%d-%b-%Y %H:%M') }}
+                    </td>
+
+                    <td>
+                        {{ report.total_reviews }}
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-success">
+
+                            {{ report.positive }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-danger">
+
+                            {{ report.negative }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        <span class="badge bg-secondary">
+
+                            {{ report.neutral }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        {{ report.processing_time }}s
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const labels = JSON.parse(
+    '{{ chart_labels | tojson }}'
+);
+
+const reviews = JSON.parse(
+    '{{ chart_reviews | tojson }}'
+);
+
+const times = JSON.parse(
+    '{{ chart_time | tojson }}'
+);
+
+const ctx = document.getElementById(
+    "historyChart"
+);
+
+new Chart(ctx, {
+
+    type: "line",
+
+    data: {
+
+        labels: labels,
+
+        datasets: [
+
+            {
+
+                label: "Reviews Processed",
+
+                data: reviews,
+
+                backgroundColor:
+                    "rgba(13,110,253,0.7)",
+
+                borderColor:
+                    "#0d6efd",
+
+                borderWidth: 1
+
+            },
+
+            {
+
+                label: "Processing Time (Seconds)",
+
+                data: times,
+
+                backgroundColor:
+                    "rgba(25,135,84,0.7)",
+
+                borderColor:
+                    "#198754",
+
+                borderWidth: 1
+
+            }
+
+        ]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        maintainAspectRatio: false,
+
+        plugins: {
+
+            legend: {
+
+                position: "top"
+
+            }
+
+        },
+
+        scales: {
+
+            y: {
+
+                beginAtZero: true
+
+            }
+
+        }
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

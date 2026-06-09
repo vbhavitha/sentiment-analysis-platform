@@ -1,0 +1,101 @@
+/* DARK THEME */
+
+body.dark-theme {
+    background-color: #121212;
+    color: white;
+}
+
+body.dark-theme .card {
+    background-color: #1f1f1f;
+    color: white;
+    border: 1px solid #333;
+}
+
+body.dark-theme textarea {
+    background-color: #2b2b2b !important;
+    color: white !important;
+    border: 1px solid #444 !important;
+}
+
+body.dark-theme .navbar {
+    background-color: #000 !important;
+}
+
+/* LIGHT THEME */
+
+body.light-theme {
+    background-color: #f8f9fa;
+    color: black;
+}
+
+body.light-theme .card {
+    background-color: white;
+    color: black;
+}
+
+body.light-theme textarea {
+    background-color: white !important;
+    color: black !important;
+}
+
+body.light-theme .navbar {
+    background-color: #0d6efd !important;
+}
+
+/* COMMON */
+
+textarea::placeholder {
+    color: gray;
+}
+
+.btn-primary {
+    width: 100%;
+}
+
+.chart-card {
+    max-width: 700px;
+}
+
+.trend-card {
+    max-width: 1000px;
+    margin: auto;
+}
+
+.chart-container {
+    position: relative;
+    height: 400px;
+    width: 100%;
+}
+
+#liveResult .card{
+    border-left: 4px solid #0d6efd;
+}
+
+.page-description {
+    color: var(--text-color);
+    opacity: 0.8;
+    font-size: 1.1rem;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+body {
+    padding-top: 80px;
+}
+
+.navbar {
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+}
+
+.navbar-brand {
+    font-weight: 700;
+}
+
+.nav-link {
+    font-weight: 500;
+}

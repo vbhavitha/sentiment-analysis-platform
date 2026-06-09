@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}
+Word Clouds
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-5">
+
+        Word Cloud Analytics
+
+    </h1>
+
+    <div class="row g-4">
+
+        <!-- Positive -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body text-center">
+
+                    <h4 class="mb-3 text-success">
+
+                        Positive Reviews
+
+                    </h4>
+
+                    <img
+                        src="{{ url_for('static', filename='positive_wordcloud.png') }}"
+                        class="img-fluid rounded"
+                        alt="Positive Word Cloud">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Negative -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body text-center">
+
+                    <h4 class="mb-3 text-danger">
+
+                        Negative Reviews
+
+                    </h4>
+
+                    <img
+                        src="{{ url_for('static', filename='negative_wordcloud.png') }}"
+                        class="img-fluid rounded"
+                        alt="Negative Word Cloud">
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- All Reviews -->
+
+        <div class="col-md-4">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body text-center">
+
+                    <h4 class="mb-3 text-primary">
+
+                        All Reviews
+
+                    </h4>
+
+                    <img
+                        src="{{ url_for('static', filename='all_wordcloud.png') }}"
+                        class="img-fluid rounded"
+                        alt="All Reviews Word Cloud">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

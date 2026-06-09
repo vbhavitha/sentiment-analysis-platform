@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">
+        Dashboard
+    </h1>
+
+    <div class="row justify-content-center g-3">
+
+        <div class="col-md-2">
+            <div class="card border-primary text-center p-2 shadow stats-card">
+                <h3>{{ total }}</h3>
+                <p>Total Analyses</p>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card border-success text-center p-2 shadow stats-card">
+                <h3>{{ positive }}</h3>
+                <p>Positive</p>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card border-danger text-center p-2 shadow stats-card">
+                <h3>{{ negative }}</h3>
+                <p>Negative</p>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="card border-secondary text-center p-2 shadow stats-card">
+                <h3>{{ neutral }}</h3>
+                <p>Neutral</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Pie Chart -->
+
+    <div class="card mt-5 shadow mx-auto chart-card">
+
+        <div class="card-body">
+
+            <h3 class="text-center mb-4">
+                Sentiment Distribution
+            </h3>
+
+            <div
+            style="
+                width: 350px;
+                height: 350px;
+                margin: 0 auto;
+            ">
+
+    <canvas id="sentimentChart"></canvas>
+
+</div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const positive = Number("{{ positive }}");
+const negative = Number("{{ negative }}");
+const neutral = Number("{{ neutral }}");
+
+const ctx = document.getElementById("sentimentChart");
+
+new Chart(ctx, {
+    type: "pie",
+
+    data: {
+        labels: [
+            "Positive",
+            "Negative",
+            "Neutral"
+        ],
+
+        datasets: [{
+            data: [
+                positive,
+                negative,
+                neutral
+            ],
+
+            backgroundColor: [
+                "#198754",
+                "#dc3545",
+                "#6c757d"
+            ],
+
+            borderWidth: 1
+        }]
+    },
+
+    options: {
+
+    responsive: true,
+
+    maintainAspectRatio: false,
+
+    plugins: {
+
+        legend: {
+            position: "bottom"
+        }
+
+    }
+
+}
+});
+
+</script>
+
+{% endblock %}

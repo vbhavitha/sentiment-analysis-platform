@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}
+History
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">
+        Sentiment History
+    </h1>
+
+    <div class="d-flex justify-content-between mb-3">
+
+        <a
+            href="/export-csv"
+            class="btn btn-success">
+
+            📥 Export CSV
+
+        </a>
+
+        <a
+            href="/clear-history"
+            class="btn btn-danger"
+            onclick="return confirm('Are you sure you want to delete all history?')">
+
+            🗑️ Clear All History
+
+        </a>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-hover">
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Text</th>
+                    <th>TextBlob Sentiment</th>
+                    <th>Polarity</th>
+                    <th>Subjectivity</th>
+                    <th>BERT Sentiment</th>
+                    <th>BERT Confidence</th>
+                    <th>Action</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in analyses %}
+
+                <tr>
+
+    <td>{{ item.id }}</td>
+
+    <td>{{ item.text }}</td>
+
+    <!-- TextBlob Sentiment -->
+
+    <td>
+
+        {% if "Positive" in item.sentiment %}
+
+        <span class="badge bg-success">
+            {{ item.sentiment }}
+        </span>
+
+        {% elif "Negative" in item.sentiment %}
+
+        <span class="badge bg-danger">
+            {{ item.sentiment }}
+        </span>
+
+        {% else %}
+
+        <span class="badge bg-secondary">
+            {{ item.sentiment }}
+        </span>
+
+        {% endif %}
+
+    </td>
+
+    <td>{{ item.polarity }}</td>
+
+    <td>{{ item.subjectivity }}</td>
+
+    <!-- BERT Sentiment -->
+
+    <td>
+
+        {% if item.bert_sentiment == "POSITIVE" %}
+
+        <span class="badge bg-success">
+            {{ item.bert_sentiment }}
+        </span>
+
+        {% elif item.bert_sentiment == "NEGATIVE" %}
+
+        <span class="badge bg-danger">
+            {{ item.bert_sentiment }}
+        </span>
+
+        {% else %}
+
+        <span class="badge bg-secondary">
+            N/A
+        </span>
+
+        {% endif %}
+
+    </td>
+
+    <!-- BERT Confidence -->
+
+    <td>
+
+        <span class="badge bg-info">
+
+            {{ item.bert_confidence }}%
+
+        </span>
+
+    </td>
+
+    <!-- Delete Button -->
+
+    <td>
+
+        <a
+            href="/delete/{{ item.id }}"
+            class="btn btn-danger btn-sm"
+            onclick="return confirm('Delete this record?')">
+
+            Delete
+
+        </a>
+
+    </td>
+
+</tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}
+Trends
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">
+        Sentiment Trends
+    </h1>
+
+    <div class="card shadow mx-auto trend-card">
+
+    <div class="card-body">
+
+        <div class="chart-container">
+
+            <canvas id="trendChart"></canvas>
+
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const trendData = JSON.parse(
+    '{{ trend_data|tojson|safe }}'
+);
+
+const labels = trendData.map(
+    item => item.date
+);
+
+const counts = trendData.map(
+    item => item.count
+);
+
+new Chart(
+    document.getElementById("trendChart"),
+    {
+        type: "line",
+
+        data: {
+            labels: labels,
+
+            datasets: [{
+                label: "Analyses",
+
+                data: counts,
+
+                borderColor: "#0d6efd",
+
+                backgroundColor: "rgba(13,110,253,0.2)",
+
+                fill: true,
+
+                tension: 0.3
+            }]
+        },
+
+        options: {
+
+    responsive: true,
+
+    maintainAspectRatio: false,
+
+    plugins: {
+
+        legend: {
+            position: "top"
+        }
+
+    },
+
+    scales: {
+
+        y: {
+            beginAtZero: true
+        }
+
+    }
+
+}
+    }
+);
+
+</script>
+
+{% endblock %}

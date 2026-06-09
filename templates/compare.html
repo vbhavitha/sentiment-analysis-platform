@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+
+{% block title %}
+Compare Sentiments
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="text-center mb-4">
+        Sentiment Comparison Tool
+    </h1>
+
+    <form method="POST">
+
+        <div class="row g-4">
+
+            <div class="col-md-6">
+
+                <label class="form-label">
+                    Text A
+                </label>
+
+                <textarea
+                    name="text_a"
+                    class="form-control"
+                    rows="8"
+                    placeholder="Enter first text..."
+                    required>{{ text_a }}</textarea>
+
+            </div>
+
+            <div class="col-md-6">
+
+                <label class="form-label">
+                    Text B
+                </label>
+
+                <textarea
+                    name="text_b"
+                    class="form-control"
+                    rows="8"
+                    placeholder="Enter second text..."
+                    required>{{ text_b }}</textarea>
+
+            </div>
+
+        </div>
+
+        <div class="text-center">
+
+            <button
+                type="submit"
+                class="btn btn-primary mt-4">
+
+                Compare Sentiments
+
+            </button>
+
+        </div>
+
+    </form>
+
+    {% if result_a and result_b %}
+
+    <!-- Winner Card -->
+
+    <div class="card mt-5 shadow">
+
+        <div class="card-body text-center">
+
+            <h3>
+
+                {% if result_a.polarity > result_b.polarity %}
+
+                🏆 Text A is More Positive
+
+                {% elif result_b.polarity > result_a.polarity %}
+
+                🏆 Text B is More Positive
+
+                {% else %}
+
+                🤝 Both Texts Have Similar Sentiment
+
+                {% endif %}
+
+            </h3>
+
+        </div>
+
+    </div>
+
+    <!-- Results -->
+
+    <div class="row mt-4 g-4">
+
+        <!-- Text A -->
+
+        <div class="col-md-6">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        Text A
+                    </h4>
+
+                    <p>
+                        {{ result_a.text }}
+                    </p>
+
+                    <hr>
+
+                    <p>
+
+                        <strong>
+                            Sentiment:
+                        </strong>
+
+                        {% if result_a.sentiment == "Positive" %}
+
+                        <span class="badge bg-success">
+                            {{ result_a.sentiment }}
+                        </span>
+
+                        {% elif result_a.sentiment == "Negative" %}
+
+                        <span class="badge bg-danger">
+                            {{ result_a.sentiment }}
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-secondary">
+                            {{ result_a.sentiment }}
+                        </span>
+
+                        {% endif %}
+
+                    </p>
+
+                    <p>
+
+                        <strong>
+                            Polarity:
+                        </strong>
+
+                        <span class="badge bg-primary">
+
+                            {{ result_a.polarity }}
+
+                        </span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Text B -->
+
+        <div class="col-md-6">
+
+            <div class="card shadow h-100">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        Text B
+                    </h4>
+
+                    <p>
+                        {{ result_b.text }}
+                    </p>
+
+                    <hr>
+
+                    <p>
+
+                        <strong>
+                            Sentiment:
+                        </strong>
+
+                        {% if result_b.sentiment == "Positive" %}
+
+                        <span class="badge bg-success">
+                            {{ result_b.sentiment }}
+                        </span>
+
+                        {% elif result_b.sentiment == "Negative" %}
+
+                        <span class="badge bg-danger">
+                            {{ result_b.sentiment }}
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge bg-secondary">
+                            {{ result_b.sentiment }}
+                        </span>
+
+                        {% endif %}
+
+                    </p>
+
+                    <p>
+
+                        <strong>
+                            Polarity:
+                        </strong>
+
+                        <span class="badge bg-primary">
+
+                            {{ result_b.polarity }}
+
+                        </span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

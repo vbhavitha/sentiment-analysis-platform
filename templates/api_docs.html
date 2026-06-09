@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+API Documentation
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <h1 class="mb-4">
+        API Documentation
+    </h1>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <h3>
+                Endpoint
+            </h3>
+
+            <code>
+                POST /api/analyze
+            </code>
+
+            <hr>
+
+            <h3>
+                Example Request
+            </h3>
+
+            <pre>
+{
+    "text": "I love Flask"
+}
+            </pre>
+
+            <hr>
+
+            <h3>
+                Example Response
+            </h3>
+
+            <pre>
+{
+    "text": "I love Flask",
+    "sentiment": "Moderately Positive",
+    "polarity": 0.5,
+    "subjectivity": 0.6
+}
+            </pre>
+
+            <hr>
+
+            <h3>
+                Description
+            </h3>
+
+            <p>
+
+                This API accepts text input and
+                returns sentiment classification,
+                polarity score, and subjectivity score.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

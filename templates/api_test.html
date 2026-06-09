@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>API Test</title>
+</head>
+<body>
+
+<button onclick="testAPI()">
+    Test API
+</button>
+
+<pre id="result"></pre>
+
+<script>
+
+async function testAPI() {
+
+    const response =
+    await fetch(
+        "/api/analyze",
+        {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+
+                text:
+                "I love Flask"
+
+            })
+
+        }
+    );
+
+    const data =
+    await response.json();
+
+    document.getElementById(
+        "result"
+    ).textContent =
+    JSON.stringify(
+        data,
+        null,
+        2
+    );
+}
+
+</script>
+
+</body>
+</html>
